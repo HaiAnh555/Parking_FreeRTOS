@@ -34,7 +34,7 @@ typedef struct {
 QueueHandle_t gateQueue;
 bool slot[4];
 
-// ===== QUẢN LÝ UID (Dữ liệu Nhóm 25) =====
+// ===== QUẢN LÝ UID  =====
 byte validUIDs[][4] = { {0x5A,0x73,0x3D,0x02}, {0x6F,0x0A,0x20,0x1F}, {0xFF,0x9B,0x57,0x1E}, {0xD1,0xE1,0xFD,0x53}, {0xE1,0x64,0xA2,0x53} };
 byte invalidUIDs[][4] = { {0x2C,0xD1,0x45,0x03} };
 #define VALID_COUNT (sizeof(validUIDs)/4)
@@ -201,7 +201,7 @@ void setup(){
 
   gateQueue = xQueueCreate(3, sizeof(GateData));
 
-  // Phân bổ Stack size tối ưu cho Nano
+  
   xTaskCreate(TaskSensor, "SEN", 80, NULL, 1, NULL);
   xTaskCreate(TaskRFID, "RF", 130, NULL, 2, NULL);
   xTaskCreate(TaskControl, "CTL", 130, NULL, 3, NULL);
