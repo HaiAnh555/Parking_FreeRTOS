@@ -3,7 +3,6 @@
 #include <ArduinoJson.h>
 #include "time.h"
 
-// === CẤU HÌNH WIFI ===
 const char* ssid = "Anh_Thư";
 const char* password = "anhthu2021";
 
@@ -14,7 +13,6 @@ const int   daylightOffset_sec = 0;
 
 WebServer server(80);
 
-// Chuyển sang kiểu long để tránh lỗi tiền âm
 int inCount = 0, outCount = 0;
 long totalRevenue = 0; 
 String slots = "0000";
@@ -23,21 +21,19 @@ struct LogEntry {
   String uid; 
   String action; 
   int mins; 
-  long money; // Sử dụng long cho từng bản ghi
+  long money; 
   String timeStr;
 };
 
 LogEntry logs[30]; 
 int logCount = 0;
 
-// Hàm lấy ngày giờ hiện tại đầy đủ
 String getLocalTimeStr() {
   struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
     return "--/--/-- --:--:--";
   }
   char timeStringBuff[25];
-  // Định dạng: Ngày/Tháng/Năm Giờ:Phút:Giây
   strftime(timeStringBuff, sizeof(timeStringBuff), "%d/%m/%Y %H:%M:%S", &timeinfo);
   return String(timeStringBuff);
 }
@@ -48,7 +44,6 @@ void addLog(String u, String a, int m, long f) {
   if (logCount < 30) logCount++;
 }
 
-// Giao diện HTML đã tối ưu CSS cho cột thời gian
 const char INDEX_HTML[] PROGMEM = R"=====(
 <!doctype html>
 <html lang="vi">
@@ -141,7 +136,7 @@ setInterval(() => {
 
 void setup() {
   Serial.begin(115200);
-  Serial2.begin(9600, SERIAL_8N1, 16, 17); // Kết nối với Arduino Nano
+  Serial2.begin(9600, SERIAL_8N1, 16, 17); 
   
   WiFi.begin(ssid, password);
   while(WiFi.status() != WL_CONNECTED) { delay(500); Serial.print("."); }
